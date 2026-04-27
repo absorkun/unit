@@ -39,3 +39,5 @@ migrations/data/
 # Lock/runtime artifacts
 *.sqlite
 *.sqlite3
+
+*csv

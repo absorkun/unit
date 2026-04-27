@@ -77,10 +77,12 @@ function checkContentsParallel(array $domains, int $parallelLimit, string $logFi
             if ($errno !== 0 && $errno !== CURLE_WRITE_ERROR) {
                 writeLog($logFile, "HTTP error {$errno} on {$item['url']}: " . curl_error($ch));
             }
+            
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             $results[] = [
                 'domain_id' => $item['domain_id'],
-                'status' => !empty($flags[spl_object_id($ch)]),
+                'status' => !empty($flags[spl_object_id($ch)]) && $httpCode !== 404,
             ];
 
             curl_multi_remove_handle($mh, $ch);
