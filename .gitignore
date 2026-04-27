@@ -1,0 +1,41 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets and local overrides
+.env
+.env.*
+!.env.example
+config/*.local.php
+config/local-*.php
+
+# Runtime logs and temp files
+*.log
+*.tmp
+*.pid
+
+# Generated outputs
+outputs/
+output.log
+error.log
+web_actives.csv
+
+# Dependency and cache
+vendor/
+composer.phar
+phpunit.result.cache
+.coverage
+coverage/
+
+# Database dumps and sensitive seed data
+*.sql.gz
+*.dump
+migrations/data/
+
+# Lock/runtime artifacts
+*.sqlite
+*.sqlite3

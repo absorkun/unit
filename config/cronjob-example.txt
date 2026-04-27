@@ -1,0 +1,15 @@
+# Contoh cronjob Ubuntu 24.04
+# Jalankan: crontab -e
+# Target: selesaikan antrean awal <= 24 jam
+# Argumen createWebsite.php: <limit_domain> <paralel_http> <batch_db>
+
+# Jalankan tiap 30 menit, lock agar tidak overlap run
+*/30 * * * * /usr/bin/flock -n /tmp/create-website.lock /usr/bin/php /home/absor/unit/console/createWebsite.php 800 20 300 >> /home/absor/unit/outputs/create-website-cron.log 2>&1
+
+# Jalankan nameserver tiap 20 menit, lock via flock Ubuntu
+# 72 run/hari x 500 domain = 36.000 domain/hari
+# Argumen createNameserver.php: <limit_domain> <paralel_http> <batch_db>
+*/20 * * * * /usr/bin/flock -n "$HOME/unit/outputs/create-nameserver.lock" /usr/bin/php "$HOME/unit/console/createNameserver.php" 500 30 400 >> "$HOME/unit/outputs/create-nameserver-cron.log" 2>&1
+
+# Export CSV harian jam 01:10
+10 1 * * * /usr/bin/php /home/absor/unit/console/exportWebsitesToCsv.php 2000 >> /home/absor/unit/outputs/export-websites-cron.log 2>&1

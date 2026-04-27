@@ -1,0 +1,21 @@
+Setup init database (Ubuntu)
+
+1) Buat database dulu jika belum ada
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS unit_dom CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+Jika init sebelumnya gagal, lebih aman reset DB dulu:
+mysql -u root -p -e "DROP DATABASE IF EXISTS unit_dom; CREATE DATABASE unit_dom CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+2) Beri izin eksekusi script
+chmod +x /var/www/unit-test/setup/init-db.sh
+
+3) Jalankan init (default: localhost, root, unit_dom)
+cd /var/www/unit-test
+./setup/init-db.sh
+
+4) Jika host/user/password/database beda, pakai env var
+DB_HOST=127.0.0.1 DB_PORT=3306 DB_USER=root DB_PASS=secret DB_NAME=unit_dom ./setup/init-db.sh
+
+Catatan
+- Script import structure dulu, lalu data, lalu relationship_stucture.sql paling akhir.
+- Urutan ini wajib untuk MariaDB karena area_data.sql memuat city/district sebelum province.
